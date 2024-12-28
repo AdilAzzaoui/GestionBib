@@ -10,44 +10,36 @@ pipeline {
         stage('Restore') {
             steps {
                 // Restaure les dépendances du projet
-                bat 'dotnet restore'
+                sh 'dotnet restore'
             }
         }
         stage('Build') {
             steps {
                 // Compile le projet
-                bat 'dotnet build --configuration Release'
+                sh 'dotnet build --configuration Release'
             }
         }
         stage('Test') {
             steps {
                 // Exécute les tests unitaires et génère un rapport XML avec xUnit
-                bat 'dotnet test --configuration Release --logger:xunit'
+                sh 'dotnet test --configuration Release --logger:xunit'
             }
             post {
                 always {
                     // Publie les résultats des tests avec xUnit
-                    xunit(
-                        testTimeMargin: '3000',
-                        thresholdMode: 1,
-                        thresholds: [
-                            skipped(unstableThreshold: '0'),
-                            failed(unstableThreshold: '0')
-                        ],
-                        tools: [
-                            CheckType(
-                                pattern: '**/TestResults/**/*.xml',
-                                skipNoTestFiles: true
-                            )
-                        ]
-                    )
+                    xunit testTimeMargin: '3000', thresholdMode: 1, 
+                          failIfNoResults: false, 
+                          skipNoTestFiles: true, 
+                          deleteOutputFiles: true, 
+                          stopProcessingIfError: true, 
+                          testResults: '**/TestResults/**/*.xml'
                 }
             }
         }
         stage('Publish') {
             steps {
                 // Publie l'application
-                bat 'dotnet publish --configuration Release --output publish'
+                sh 'dotnet publish --configuration Release --output publish'
             }
         }
     }
