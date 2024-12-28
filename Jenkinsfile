@@ -22,12 +22,16 @@ pipeline {
         stage('Test') {
             steps {
                 // Exécute les tests unitaires et génère un rapport XML avec xUnit
-                sh 'dotnet test --configuration Release --logger:xunit'
+                sh 'dotnet test --configuration Release --logger:xunit;LogFileName=TestResults/testresult.xml'
             }
             post {
                 always {
                     // Publie les résultats des tests avec xUnit
-                    xunit testTimeMargin: '3000', thresholdMode: 1, testResults: '**/TestResults/**/*.xml'
+                    xunit(
+                        testResults: 'TestResults/testresult.xml',
+                        testTimeMargin: '3000', 
+                        thresholdMode: 1
+                    )
                 }
             }
         }
