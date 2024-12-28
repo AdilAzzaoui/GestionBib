@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        PATH = "/usr/local/share/dotnet:$PATH"  // Assurez-vous que le chemin vers dotnet est inclus
+        PATH = "/usr/local/share/dotnet:/usr/local/bin:$PATH"  // Assurez-vous que le chemin vers dotnet et docker est inclus
         DOCKER_IMAGE_NAME = 'adil1020111/gestionbibliotheque'  // Nom de l'image Docker (modifiez-le selon votre compte Docker Hub)
         DOCKER_TAG = 'latest'  // Tag de l'image Docker
         DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'  // Identifiants Docker Hub dans Jenkins (modifiez selon votre configuration)
