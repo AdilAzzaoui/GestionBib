@@ -32,23 +32,9 @@ pipeline {
             steps {
                 script {
                     // Exécute les tests unitaires
-                    sh 'dotnet test --configuration Release --logger:xunit;LogFileName=TestResults/testresult.xml'
+                    sh 'dotnet test --configuration Release'
                 }
             }
-        }
-    }
-    post {
-        always {
-            // Publie les résultats des tests (xUnit)
-            xunit(
-                tools: [xUnitDotNetTestType(
-                    pattern: 'TestResults/testresult.xml',
-                    skipNoTestFiles: true,
-                    failIfNotNew: false,
-                    deleteOutputFiles: true,
-                    stopProcessingIfError: true
-                )]
-            )
         }
     }
 }
