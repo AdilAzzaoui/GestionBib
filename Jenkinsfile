@@ -36,19 +36,19 @@ pipeline {
                 }
             }
         }
-        post {
-            always {
-                // Publie les résultats des tests (xUnit)
-                xunit(
-                    tools: [xUnitDotNetTestType(
-                        pattern: 'TestResults/testresult.xml',
-                        skipNoTestFiles: true,
-                        failIfNotNew: false,
-                        deleteOutputFiles: true,
-                        stopProcessingIfError: true
-                    )]
-                )
-            }
+    }
+    post {
+        always {
+            // Publie les résultats des tests (xUnit)
+            xunit(
+                tools: [xUnitDotNetTestType(
+                    pattern: 'TestResults/testresult.xml',
+                    skipNoTestFiles: true,
+                    failIfNotNew: false,
+                    deleteOutputFiles: true,
+                    stopProcessingIfError: true
+                )]
+            )
         }
     }
 }
