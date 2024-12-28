@@ -1,10 +1,13 @@
 pipeline {
     agent any
+    environment {
+        PATH = "/usr/local/share/dotnet:$PATH"  // Assurez-vous que le chemin vers dotnet est inclus
+    }
     stages {
-        stage('Check Shell') {
+        stage('Check Dotnet Version') {
             steps {
                 script {
-                    sh 'echo "Hello from Jenkins!"'
+                    sh 'dotnet --version'
                 }
             }
         }
