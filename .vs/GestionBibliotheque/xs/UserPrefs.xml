@@ -1,0 +1,44 @@
+﻿<Properties StartupConfiguration="{1C5ADA8A-623E-48F3-8AF6-6574E5A453A6}|Default">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="GestionBibliotheque/Program.cs">
+    <Files>
+      <File FileName="GestionBibliotheque/Services/Interfaces/IGeneratorService.cs" />
+      <File FileName="GestionBibliotheque/Services/GeneratorService.cs" Line="15" Column="1" />
+      <File FileName="GestionBibliotheque/Services/BookService.cs" Line="39" Column="10" />
+      <File FileName="GestionBibliotheque/Models/Book.cs" />
+      <File FileName="GestionBibliotheque/Services/Interfaces/IBookService.cs" Line="1" Column="1" />
+      <File FileName="GestionBibliotheque/Mappers/BookMapper.cs" />
+      <File FileName="GestionBibliotheque/Exceptions/BookNotFoundException.cs" />
+      <File FileName="GestionBibliotheque/Exceptions/DuplicateISBNException.cs" />
+      <File FileName="GestionBibliotheque/DTOs/BookUpdateDto.cs" />
+      <File FileName="GestionBibliotheque/DTOs/BookFilterDto.cs" />
+      <File FileName="GestionBibliotheque/DTOs/BookDto.cs" />
+      <File FileName="GestionBibliotheque/DTOs/BookAddDto.cs" />
+      <File FileName="GestionBibliotheque/Controllers/BooksController.cs" />
+      <File FileName="GestionBibliotheque/Program.cs" Line="21" Column="1" />
+      <File FileName="GestionBibliotheque/Middleware/ExceptionHandlingMiddleware.cs" />
+      <File FileName="GestionBibliotheque.Tests/BookServiceTests.cs" Line="199" Column="11" />
+      <File FileName="GestionBibliotheque/Exceptions/InvalidIdException.cs" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="GestionBibliotheque" expanded="True">
+            <Node name="GestionBibliotheque">
+              <Node name="Services" expanded="True">
+                <Node name="Interfaces" expanded="True" />
+              </Node>
+              <Node name="Program.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.GestionBibliotheque PreferredExecutionTarget="/Applications/Safari.app" />
+</Properties>

@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GestionBibliotheque</name>
+    </assembly>
+    <members>
+        <member name="T:GestionBibliotheque.Services.BookService">
+            <summary>
+            Implémentation du service de gestion des livres.
+            </summary>
+        </member>
+        <member name="M:GestionBibliotheque.Services.BookService.AddBook(GestionBibliotheque.DTOs.BookAddDto)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GestionBibliotheque.Services.BookService.DeleteBook(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GestionBibliotheque.Services.BookService.GetAllBooks">
+            <inheritdoc/>
+        </member>
+        <member name="M:GestionBibliotheque.Services.BookService.UpdateBook(System.String,GestionBibliotheque.DTOs.BookUpdateDto)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GestionBibliotheque.Services.BookService.GetBookByIdAndTitle(GestionBibliotheque.DTOs.BookFilterDto)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GestionBibliotheque.Services.Interfaces.IBookService">
+            <summary>
+            Interface qui définit les opérations disponibles pour la gestion des livres.
+            </summary>
+        </member>
+        <member name="M:GestionBibliotheque.Services.Interfaces.IBookService.AddBook(GestionBibliotheque.DTOs.BookAddDto)">
+            <summary>
+            Ajoute un nouveau livre dans la collection.
+            </summary>
+            <param name="bookModel">Le modèle de données du livre à ajouter.</param>
+            <returns>Le livre ajouté après l'insertion dans la collection.</returns>
+            <exception cref="!:DuplicateISBNException">Lève une exception si l'ISBN du livre existe déjà.</exception>
+        </member>
+        <member name="M:GestionBibliotheque.Services.Interfaces.IBookService.UpdateBook(System.String,GestionBibliotheque.DTOs.BookUpdateDto)">
+            <summary>
+            Met à jour les informations d'un livre existant.
+            </summary>
+            <param name="id">L'ID du livre à mettre à jour.</param>
+            <param name="bookModel">Le modèle contenant les nouvelles données du livre.</param>
+            <exception cref="!:InvalidIdException">Lève une exception si l'ID ne correspond pas à celui du livre à mettre à jour.</exception>
+        </member>
+        <member name="M:GestionBibliotheque.Services.Interfaces.IBookService.GetAllBooks">
+            <summary>
+            Récupère tous les livres disponibles.
+            </summary>
+            <returns>Une liste de tous les livres sous forme de <see cref="T:GestionBibliotheque.DTOs.BookDto"/>.</returns>
+        </member>
+        <member name="M:GestionBibliotheque.Services.Interfaces.IBookService.DeleteBook(System.String)">
+            <summary>
+            Supprime un livre de la collection.
+            </summary>
+            <param name="id">L'ID du livre à supprimer.</param>
+            <exception cref="!:BookNotFoundException">Lève une exception si le livre à supprimer n'existe pas.</exception>
+        </member>
+        <member name="M:GestionBibliotheque.Services.Interfaces.IBookService.GetBookByIdAndTitle(GestionBibliotheque.DTOs.BookFilterDto)">
+            <summary>
+            Recherche un livre par son ID et son titre.
+            </summary>
+            <param name="filterDto">Le DTO contenant l'ID et le titre du livre à rechercher.</param>
+            <returns>Le livre trouvé sous forme de <see cref="T:GestionBibliotheque.DTOs.BookDto"/>.</returns>
+            <exception cref="!:BookNotFoundException">Lève une exception si aucun livre correspondant n'est trouvé.</exception>
+        </member>
+    </members>
+</doc>
