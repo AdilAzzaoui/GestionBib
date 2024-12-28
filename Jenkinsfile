@@ -27,14 +27,7 @@ pipeline {
             post {
                 always {
                     // Publie les résultats des tests avec xUnit
-                    xunit(
-                        tools: [XUnitDotNet(pattern: '**/TestResults/**/*.xml')],
-                        thresholdMode: 1,
-                        failIfNoResults: false,
-                        skipNoTestFiles: true,
-                        deleteOutputFiles: true,
-                        stopProcessingIfError: true
-                    )
+                    xunit testTimeMargin: '3000', thresholdMode: 1, testResults: '**/TestResults/**/*.xml'
                 }
             }
         }
