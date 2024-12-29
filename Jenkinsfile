@@ -1,16 +1,18 @@
 pipeline {
     agent any
     environment {
-        PATH = "/usr/local/share/dotnet:/usr/local/bin:$PATH"  // Assurez-vous que le chemin vers dotnet et docker est inclus
-        DOCKER_IMAGE_NAME = 'adil1020111/gestionbibliotheque'  // Nom de l'image Docker (modifiez-le selon votre compte Docker Hub)
-        DOCKER_TAG = 'latest'  // Tag de l'image Docker
-        DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'  // Identifiants Docker Hub dans Jenkins (modifiez selon votre configuration)
+        PATH = "/usr/local/share/dotnet:/usr/local/bin:$PATH"
+        DOCKER_IMAGE_NAME = 'adil1020111/gestionbibliotheque'
+        DOCKER_TAG = 'latest'
+        DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'
+        AZURE_VM_IP = '20.188.47.31'
+        AZURE_SSH_USER = 'adilazzaoui'
+        AZURE_SSH_PRIVATE_KEY = credentials('azure-ssh-private-key')
     }
     stages {
         stage('Check Dotnet Version') {
             steps {
                 script {
-                    // Vérifie la version de dotnet
                     sh 'dotnet --version'
                 }
             }
@@ -18,7 +20,6 @@ pipeline {
         stage('Restore Dependencies') {
             steps {
                 script {
-                    // Restaure les dépendances du projet
                     sh 'dotnet restore'
                 }
             }
@@ -26,7 +27,6 @@ pipeline {
         stage('Build Project') {
             steps {
                 script {
-                    // Compile le projet
                     sh 'dotnet build --configuration Release'
                 }
             }
@@ -34,7 +34,6 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    // Exécute les tests unitaires
                     sh 'dotnet test --configuration Release'
                 }
             }
@@ -42,7 +41,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build l'image Docker à partir du Dockerfile
                     sh 'docker build -t $DOCKER_IMAGE_NAME:$DOCKER_TAG .'
                 }
             }
@@ -50,7 +48,6 @@ pipeline {
         stage('Login to Docker Hub') {
             steps {
                 script {
-                    // Se connecter à Docker Hub à l'aide des identifiants stockés dans Jenkins
                     withCredentials([usernamePassword(credentialsId: "$DOCKER_CREDENTIALS_ID", usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                     }
@@ -60,8 +57,20 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    // Pousse l'image sur Docker Hub
                     sh 'docker push $DOCKER_IMAGE_NAME:$DOCKER_TAG'
+                }
+            }
+        }
+        stage('Deploy to Azure VM') {
+            steps {
+                script {
+                    // Connexion à la VM Azure via SSH et déploiement de l'image Docker
+                    sh '''
+                    ssh -i $AZURE_SSH_PRIVATE_KEY $AZURE_SSH_USER@$AZURE_VM_IP << EOF
+                        docker pull $DOCKER_IMAGE_NAME:$DOCKER_TAG
+                        docker run -d -p 80:80 $DOCKER_IMAGE_NAME:$DOCKER_TAG
+                    EOF
+                    '''
                 }
             }
         }
