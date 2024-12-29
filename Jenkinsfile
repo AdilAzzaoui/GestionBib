@@ -66,14 +66,10 @@ pipeline {
                 script {
                     // Connexion à la VM Azure via SSH et déploiement de l'image Docker
                     sh """
-                        ssh -i \$AZURE_SSH_PRIVATE_KEY \$AZURE_SSH_USER@\${AZURE_VM_IP} << EOF
-                        docker pull \$DOCKER_IMAGE_NAME:\$DOCKER_TAG
-                        docker run -d -p 80:80 \$DOCKER_IMAGE_NAME:\$DOCKER_TAG
-                        EOF
+                        ssh -t -i \$AZURE_SSH_PRIVATE_KEY \$AZURE_SSH_USER@\${AZURE_VM_IP} "docker pull \$DOCKER_IMAGE_NAME:\$DOCKER_TAG && docker run -d -p 80:80 \$DOCKER_IMAGE_NAME:\$DOCKER_TAG"
                     """
                 }
             }
         }
-
     }
 }
