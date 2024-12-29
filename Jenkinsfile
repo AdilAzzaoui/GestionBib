@@ -64,12 +64,20 @@ pipeline {
         stage('Deploy to Azure VM') {
             steps {
                 script {
-                    // Connexion à la VM Azure via SSH et déploiement de l'image Docker
                     sh """
-                        ssh -t -i \$AZURE_SSH_PRIVATE_KEY \$AZURE_SSH_USER@\${AZURE_VM_IP} "docker pull \$DOCKER_IMAGE_NAME:\$DOCKER_TAG && docker run -d -p 80:80 \$DOCKER_IMAGE_NAME:\$DOCKER_TAG"
+                        ssh -t -i \$AZURE_SSH_PRIVATE_KEY \$AZURE_SSH_USER@\${AZURE_VM_IP} "
+                            # Stop and remove the existing container using the image if it exists
+                            docker ps -q -f 'ancestor=\$DOCKER_IMAGE_NAME:\$DOCKER_TAG' | xargs -r docker stop
+                            docker ps -q -f 'ancestor=\$DOCKER_IMAGE_NAME:\$DOCKER_TAG' | xargs -r docker rm
+                            
+                            # Pull the new Docker image and run the container
+                            docker pull \$DOCKER_IMAGE_NAME:\$DOCKER_TAG
+                            docker run -d -p 80:80 \$DOCKER_IMAGE_NAME:\$DOCKER_TAG
+                        "
                     """
                 }
             }
         }
+
     }
 }
